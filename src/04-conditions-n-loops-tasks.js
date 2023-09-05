@@ -210,8 +210,10 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const start = isStartIncluded ? '[' : '(';
+  const end = isEndIncluded ? ']' : ')';
+  return `${start}${a < b ? a : b}, ${a > b ? a : b}${end}`;
 }
 
 
@@ -368,9 +370,30 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+
+function getCommonDirectoryPath(pathes) {
+  const result = [];
+  const arr = pathes.map((el) => el.split('/'));
+  for (let i = 0; i < arr[0].length; i += 1) {
+    const piece = arr[0][i];
+    if (arr.every((el) => el[i] === piece)) result.push(piece);
+    else break;
+  }
+  return result.length ? `${result.join('/')}/` : '';
 }
+// function getCommonDirectoryPath(pathes) {
+//   let exitFlag = false;
+//   const paths = pathes.map((el) => {
+//     if (el.lastIndexOf('/') === -1) exitFlag = true;
+//     return el.slice(0, el.lastIndexOf('/'));
+//   });
+
+//   const exitExp = paths.filter((el, i, arr) => el === arr[0]);
+
+//   if (exitFlag) return '';
+//   if (paths.length === exitExp.length) return `${paths[0]}/`;
+//   return getCommonDirectoryPath(paths);
+// }
 
 
 /**
