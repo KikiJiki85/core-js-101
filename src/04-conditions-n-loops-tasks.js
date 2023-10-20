@@ -490,8 +490,50 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(positions) {
+  const winningOptions = [
+    [1, 2, 3],
+    [1, 5, 9],
+    [1, 4, 7],
+    [2, 5, 8],
+    [3, 5, 7],
+    [3, 6, 9],
+    [4, 5, 6],
+    [7, 8, 9],
+  ];
+
+  const gamers = [
+    {
+      id: 'X',
+      moves: [],
+    }, {
+      id: '0',
+      moves: [],
+    },
+  ];
+  let result;
+
+  positions.forEach((item) => (item.length !== 3 ? item.push(undefined) : null));
+
+  const [line1, line2, line3] = positions;
+
+  const res = [...line1, ...line2, ...line3];
+
+
+  for (let i = 0; i < res.length; i += 1) {
+    if (res[i] === gamers[0].id) gamers[0].moves.push(i + 1);
+    else if (res[i] === gamers[1].id) gamers[1].moves.push(i + 1);
+  }
+
+  winningOptions.forEach((option) => {
+    if (option.every((value) => gamers[0].moves.includes(value))) {
+      result = 'X';
+    }
+    if (option.every((value) => gamers[1].moves.includes(value))) {
+      result = '0';
+    }
+  });
+  return result;
 }
 
 
